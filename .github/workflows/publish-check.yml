@@ -1,0 +1,77 @@
+name: Publish check
+
+# Checks the CurseForge and Modrinth setup (tokens and project ids) without uploading anything.
+on:
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  check:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Check access
+        env:
+          CURSEFORGE_TOKEN: ${{ secrets.CURSEFORGE_TOKEN }}
+          CURSEFORGE_PROJECT_ID: ${{ vars.CURSEFORGE_PROJECT_ID || secrets.CURSEFORGE_PROJECT_ID }}
+          MODRINTH_TOKEN: ${{ secrets.MODRINTH_TOKEN }}
+          MODRINTH_PROJECT_ID: ${{ vars.MODRINTH_PROJECT_ID || secrets.MODRINTH_PROJECT_ID }}
+        run: |
+          failed=0
+          report() { echo "| $1 | $2 |" >> "$GITHUB_STEP_SUMMARY"; echo "$1: $2"; }
+          fail() { report "$1" "❌ $2"; failed=1; }
+          # Prints the HTTP status; the body goes to the given file. Tokens only travel in headers.
+          get() { curl -sS -o "$1" -w '%{http_code}' -H "$2" -H 'User-Agent: albertheshroom/monsterultramcmod publish-check' "$3"; }
+
+          echo "| Platforma | Stav |" >> "$GITHUB_STEP_SUMMARY"
+          echo "|---|---|" >> "$GITHUB_STEP_SUMMARY"
+
+          if [ -z "$CURSEFORGE_TOKEN" ] && [ -z "$CURSEFORGE_PROJECT_ID" ]; then
+            report CurseForge "⏭️ přeskočeno (není nastavené)"
+          elif [ -z "$CURSEFORGE_TOKEN" ]; then
+            fail CurseForge "chybí secret CURSEFORGE_TOKEN"
+          elif ! [[ "$CURSEFORGE_PROJECT_ID" =~ ^[0-9]+$ ]]; then
+            fail CurseForge "variable CURSEFORGE_PROJECT_ID musí být číselné Project ID, je '$CURSEFORGE_PROJECT_ID'"
+          else
+            status=$(get cf.json "X-Api-Token: $CURSEFORGE_TOKEN" https://minecraft.curseforge.com/api/game/versions)
+            if [ "$status" = 200 ]; then
+              report CurseForge "✅ token platí, projekt $CURSEFORGE_PROJECT_ID"
+            else
+              fail CurseForge "token neplatí (HTTP $status)"
+            fi
+          fi
+
+          if [ -z "$MODRINTH_TOKEN" ] && [ -z "$MODRINTH_PROJECT_ID" ]; then
+            report Modrinth "⏭️ přeskočeno (není nastavené)"
+          elif [ -z "$MODRINTH_TOKEN" ]; then
+            fail Modrinth "chybí secret MODRINTH_TOKEN"
+          elif [ -z "$MODRINTH_PROJECT_ID" ]; then
+            # Help find the id: list the projects of the token's owner (needs the Read user data scope).
+            user=$(get user.json "Authorization: $MODRINTH_TOKEN" https://api.modrinth.com/v2/user)
+            if [ "$user" = 200 ] && [ "$(get projects.json "Authorization: $MODRINTH_TOKEN" "https://api.modrinth.com/v2/user/$(jq -r .id user.json)/projects")" = 200 ]; then
+              found=$(jq -r 'map("\(.title) (ID `\(.id)`, slug `\(.slug)`)") | join(", ")' projects.json)
+              fail Modrinth "chybí variable MODRINTH_PROJECT_ID; projekty tokenu: ${found:-žádné}"
+            else
+              fail Modrinth "chybí variable MODRINTH_PROJECT_ID"
+            fi
+          else
+            project=$(get project.json "Authorization: $MODRINTH_TOKEN" "https://api.modrinth.com/v2/project/$MODRINTH_PROJECT_ID")
+            if [ "$project" != 200 ]; then
+              fail Modrinth "projekt '$MODRINTH_PROJECT_ID' nenalezen (HTTP $project): špatné ID, nebo token neplatí či nemá Read projects"
+            else
+              title=$(jq -r .title project.json)
+              user=$(get user.json "Authorization: $MODRINTH_TOKEN" https://api.modrinth.com/v2/user)
+              if [ "$user" != 200 ]; then
+                # Membership can only be checked with the Read user data scope; uploading does not need it.
+                report Modrinth "✅ projekt $title ($(jq -r .status project.json)); členství neověřeno, token nemá Read user data"
+              elif [ "$(get members.json "Authorization: $MODRINTH_TOKEN" "https://api.modrinth.com/v2/team/$(jq -r .team project.json)/members")" = 200 ] \
+                  && jq -e --arg me "$(jq -r .id user.json)" 'any(.[]; .user.id == $me)' members.json > /dev/null; then
+                report Modrinth "✅ token platí, projekt $title ($(jq -r .status project.json))"
+              else
+                fail Modrinth "token nepatří členovi týmu projektu $title"
+              fi
+            fi
+          fi
+
+          exit $failed

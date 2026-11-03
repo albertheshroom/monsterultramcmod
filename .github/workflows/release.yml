@@ -2,13 +2,19 @@ name: Release
 
 on:
   push:
-    tags:
-      - 'v*'
+    tags: ['v*']
   workflow_dispatch:
     inputs:
       tag:
-        description: 'Release tag (e.g. v0.0.1-alpha)'
+        description: Tag k vydání (např. v0.0.2-alpha)
         required: true
+      target:
+        description: Commit nebo větev, na kterou se tag vytvoří, pokud ještě neexistuje (prázdné = výchozí větev)
+        default: ''
+      publish:
+        description: Nahrát na CurseForge a Modrinth (pokud jsou nastavené tokeny)
+        type: boolean
+        default: true
 
 permissions:
   contents: write
@@ -17,34 +23,109 @@ jobs:
   release:
     runs-on: ubuntu-latest
     env:
-      TAG: ${{ inputs.tag || github.ref_name }}
+      TAG: ${{ github.event_name == 'workflow_dispatch' && inputs.tag || github.ref_name }}
+      GH_TOKEN: ${{ github.token }}
+      # A platform counts only with both its token and its project id.
+      HAS_PUBLISH_TOKENS: ${{ (secrets.CURSEFORGE_TOKEN != '' && (vars.CURSEFORGE_PROJECT_ID || secrets.CURSEFORGE_PROJECT_ID) != '') || (secrets.MODRINTH_TOKEN != '' && (vars.MODRINTH_PROJECT_ID || secrets.MODRINTH_PROJECT_ID) != '') }}
+      HAS_ANY_TOKEN: ${{ secrets.CURSEFORGE_TOKEN != '' || secrets.MODRINTH_TOKEN != '' }}
     steps:
+      - name: Create the tag if it does not exist yet
+        if: github.event_name == 'workflow_dispatch'
+        env:
+          TARGET: ${{ inputs.target || github.event.repository.default_branch }}
+        run: |
+          if gh api "repos/$GITHUB_REPOSITORY/git/ref/tags/$TAG" > /dev/null 2>&1; then
+            echo "Tag $TAG already exists"
+          else
+            # The releases API may create tags on commits that contain workflows; the refs API may not.
+            sha=$(gh api "repos/$GITHUB_REPOSITORY/commits/$TARGET" --jq .sha)
+            gh release create "$TAG" --target "$sha" --title "$TAG" --notes "…" --prerelease -R "$GITHUB_REPOSITORY"
+            echo "Created tag $TAG at $sha"
+          fi
+
+      # Release notes always come from the default branch, the code from the tag.
       - uses: actions/checkout@v4
+        with:
+          ref: ${{ github.event.repository.default_branch }}
+          path: meta
+
+      - uses: actions/checkout@v4
+        with:
+          ref: ${{ env.TAG }}
+          path: src
 
       - uses: actions/setup-java@v4
         with:
           distribution: temurin
-          java-version: '25'
+          java-version: 25
 
       - uses: gradle/actions/setup-gradle@v4
 
-      - name: Build
-        run: ./gradlew build
-
-      - name: Collect jar and release notes
+      - name: Version
+        id: meta
         run: |
-          mkdir -p dist
-          cp build/libs/*.jar dist/
-          rm -f dist/*-sources.jar
-          f=".github/release-notes/${TAG}.md"
-          if [ -f "$f" ]; then cp "$f" dist/notes.md; else echo "Monster Ultra ${TAG}" > dist/notes.md; fi
+          version="${TAG#v}"
+          echo "version=$version" >> "$GITHUB_OUTPUT"
+          echo "title=Monster Ultra $version" >> "$GITHUB_OUTPUT"
+          case "$version" in
+            0.*|*-*) echo "prerelease=true" >> "$GITHUB_OUTPUT"; echo "type=alpha" >> "$GITHUB_OUTPUT" ;;
+            *) echo "prerelease=false" >> "$GITHUB_OUTPUT"; echo "type=release" >> "$GITHUB_OUTPUT" ;;
+          esac
+          notes="meta/.github/release-notes/$TAG.md"
+          if [ -f "$notes" ]; then cp "$notes" notes.md; else echo "Monster Ultra $version" > notes.md; fi
+          publish=false
+          if [ "$HAS_PUBLISH_TOKENS" = "true" ]; then
+            if [ "${{ github.event_name }}" = "push" ] || [ "${{ inputs.publish }}" = "true" ]; then publish=true; fi
+          elif [ "$HAS_ANY_TOKEN" = "true" ]; then
+            echo "::warning::Tokens are set but no project id: set CURSEFORGE_PROJECT_ID or MODRINTH_PROJECT_ID to publish."
+          fi
+          echo "publish=$publish" >> "$GITHUB_OUTPUT"
 
-      - name: Create GitHub release
-        uses: softprops/action-gh-release@v2
+      - name: Build
+        working-directory: src
+        run: |
+          chmod +x gradlew
+          ./gradlew build -Pversion="${{ steps.meta.outputs.version }}" --no-daemon
+          mkdir -p ../dist
+          cp build/libs/*.jar ../dist/
+          rm -f ../dist/*-sources.jar
+          ls ../dist
+
+      - name: GitHub release
+        run: |
+          files=$(ls dist/*.jar)
+          if gh release view "$TAG" -R "$GITHUB_REPOSITORY" > /dev/null 2>&1; then
+            gh release upload "$TAG" $files --clobber -R "$GITHUB_REPOSITORY"
+            # The tag step creates a placeholder pre-release; a full release has to be switched over (and made latest).
+            latest=""
+            if [ "${{ steps.meta.outputs.prerelease }}" != "true" ]; then latest="--latest"; fi
+            gh release edit "$TAG" --title "${{ steps.meta.outputs.title }}" --notes-file notes.md \
+              --prerelease=${{ steps.meta.outputs.prerelease }} $latest -R "$GITHUB_REPOSITORY"
+          else
+            prerelease=""
+            if [ "${{ steps.meta.outputs.prerelease }}" = "true" ]; then prerelease="--prerelease"; fi
+            gh release create "$TAG" $files --verify-tag --title "${{ steps.meta.outputs.title }}" \
+              --notes-file notes.md $prerelease -R "$GITHUB_REPOSITORY"
+          fi
+
+      - name: Publish to CurseForge and Modrinth
+        if: steps.meta.outputs.publish == 'true'
+        uses: Kir-Antipov/mc-publish@v3.3
         with:
-          tag_name: ${{ env.TAG }}
-          target_commitish: ${{ github.sha }}
-          name: Monster Ultra ${{ env.TAG }}
-          body_path: dist/notes.md
-          prerelease: ${{ contains(env.TAG, 'alpha') || contains(env.TAG, 'beta') || contains(env.TAG, 'rc') }}
+          # A platform without a token gets no project id, so mc-publish skips it.
+          curseforge-id: ${{ secrets.CURSEFORGE_TOKEN != '' && (vars.CURSEFORGE_PROJECT_ID || secrets.CURSEFORGE_PROJECT_ID) || '' }}
+          curseforge-token: ${{ secrets.CURSEFORGE_TOKEN }}
+          modrinth-id: ${{ secrets.MODRINTH_TOKEN != '' && (vars.MODRINTH_PROJECT_ID || secrets.MODRINTH_PROJECT_ID) || '' }}
+          modrinth-token: ${{ secrets.MODRINTH_TOKEN }}
+          # A failure on one platform must not stop the other; it shows up as a warning in the run.
+          fail-mode: warn
           files: dist/*.jar
+          name: ${{ steps.meta.outputs.title }}
+          version: ${{ steps.meta.outputs.version }}
+          version-type: ${{ steps.meta.outputs.type }}
+          changelog-file: notes.md
+          loaders: fabric
+          game-versions: 26.3
+          java: 25
+          dependencies: |
+            fabric-api(required)

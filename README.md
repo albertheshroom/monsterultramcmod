@@ -57,6 +57,10 @@ Ikona modu: `src/main/resources/assets/monsterultra/icon.png`.
 
 Efekty plechovek se nastavují v `src/main/java/cz/albert/monsterultra/MonsterFlavor.java` (metoda `effects()`).
 
+## Vydávání
+
+Vydání na GitHub, CurseForge a Modrinth: viz [docs/vydavani.md](docs/vydavani.md).
+
 ## Build
 
 Potřeba **Java 25**.
