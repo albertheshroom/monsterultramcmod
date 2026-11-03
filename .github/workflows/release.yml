@@ -5,6 +5,10 @@ on:
     tags:
       - 'v*'
   workflow_dispatch:
+    inputs:
+      tag:
+        description: 'Release tag (e.g. v0.0.1-alpha)'
+        required: true
 
 permissions:
   contents: write
@@ -12,6 +16,8 @@ permissions:
 jobs:
   release:
     runs-on: ubuntu-latest
+    env:
+      TAG: ${{ inputs.tag || github.ref_name }}
     steps:
       - uses: actions/checkout@v4
 
@@ -30,13 +36,15 @@ jobs:
           mkdir -p dist
           cp build/libs/*.jar dist/
           rm -f dist/*-sources.jar
-          f=".github/release-notes/${GITHUB_REF_NAME}.md"
-          if [ -f "$f" ]; then cp "$f" dist/notes.md; else echo "Monster Ultra ${GITHUB_REF_NAME}" > dist/notes.md; fi
+          f=".github/release-notes/${TAG}.md"
+          if [ -f "$f" ]; then cp "$f" dist/notes.md; else echo "Monster Ultra ${TAG}" > dist/notes.md; fi
 
       - name: Create GitHub release
         uses: softprops/action-gh-release@v2
         with:
-          name: Monster Ultra ${{ github.ref_name }}
+          tag_name: ${{ env.TAG }}
+          target_commitish: ${{ github.sha }}
+          name: Monster Ultra ${{ env.TAG }}
           body_path: dist/notes.md
-          prerelease: ${{ contains(github.ref_name, 'alpha') || contains(github.ref_name, 'beta') || contains(github.ref_name, 'rc') }}
+          prerelease: ${{ contains(env.TAG, 'alpha') || contains(env.TAG, 'beta') || contains(env.TAG, 'rc') }}
           files: dist/*.jar
