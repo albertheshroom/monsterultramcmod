@@ -1,0 +1,11 @@
+{
+	"required": true,
+	"package": "cz.albert.monsterultra.mixin",
+	"compatibilityLevel": "JAVA_25",
+	"mixins": [
+		"BrewingStandBlockEntityMixin"
+	],
+	"injectors": {
+		"defaultRequire": 1
+	}
+}

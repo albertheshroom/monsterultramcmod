@@ -1,0 +1,30 @@
+{
+	"schemaVersion": 1,
+	"id": "monsterultra",
+	"version": "${version}",
+	"name": "Monster Ultra",
+	"description": "Adds Monster Ultra energy drinks - cans and buckets of 16 flavors, brewed in the brewing stand.",
+	"authors": [
+		"albertheshroom"
+	],
+	"contact": {
+		"sources": "https://github.com/albertheshroom/monsterultramcmod"
+	},
+	"license": "All-Rights-Reserved",
+	"icon": "assets/monsterultra/icon.png",
+	"environment": "*",
+	"entrypoints": {
+		"main": [
+			"cz.albert.monsterultra.MonsterUltra"
+		]
+	},
+	"mixins": [
+		"monsterultra.mixins.json"
+	],
+	"depends": {
+		"fabricloader": ">=0.20.1",
+		"minecraft": "~26.3",
+		"java": ">=25",
+		"fabric-api": "*"
+	}
+}

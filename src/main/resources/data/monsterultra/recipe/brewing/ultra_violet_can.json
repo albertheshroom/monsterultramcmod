@@ -1,0 +1,12 @@
+{
+  "type": "minecraft:brewing",
+  "input": {
+    "item": "minecraft:iron_nugget"
+  },
+  "reagent": {
+    "item": "monsterultra:ultra_violet_bucket"
+  },
+  "output": {
+    "id": "monsterultra:ultra_violet_can"
+  }
+}

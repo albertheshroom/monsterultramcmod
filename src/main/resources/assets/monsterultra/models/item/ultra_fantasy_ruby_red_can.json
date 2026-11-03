@@ -1,0 +1,6 @@
+{
+  "parent": "minecraft:item/generated",
+  "textures": {
+    "layer0": "monsterultra:item/ultra_fantasy_ruby_red_can"
+  }
+}

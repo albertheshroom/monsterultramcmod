@@ -1,0 +1,6 @@
+{
+  "parent": "minecraft:item/generated",
+  "textures": {
+    "layer0": "monsterultra:item/ultra_fiesta_mango_can"
+  }
+}
