@@ -1,0 +1,42 @@
+name: Release
+
+on:
+  push:
+    tags:
+      - 'v*'
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+jobs:
+  release:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-java@v4
+        with:
+          distribution: temurin
+          java-version: '25'
+
+      - uses: gradle/actions/setup-gradle@v4
+
+      - name: Build
+        run: ./gradlew build
+
+      - name: Collect jar and release notes
+        run: |
+          mkdir -p dist
+          cp build/libs/*.jar dist/
+          rm -f dist/*-sources.jar
+          f=".github/release-notes/${GITHUB_REF_NAME}.md"
+          if [ -f "$f" ]; then cp "$f" dist/notes.md; else echo "Monster Ultra ${GITHUB_REF_NAME}" > dist/notes.md; fi
+
+      - name: Create GitHub release
+        uses: softprops/action-gh-release@v2
+        with:
+          name: Monster Ultra ${{ github.ref_name }}
+          body_path: dist/notes.md
+          prerelease: ${{ contains(github.ref_name, 'alpha') || contains(github.ref_name, 'beta') || contains(github.ref_name, 'rc') }}
+          files: dist/*.jar
