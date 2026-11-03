@@ -42,7 +42,7 @@ Spuštění bez paliva zajišťuje mixin `BrewingStandBlockEntityMixin`.
 
 ## Textury
 
-Zatím jsou použité vygenerované placeholdery. Vlastní textury stačí nahrát (16×16 PNG, nebo jiný násobek) se stejným jménem do:
+Textury itemů (16×16 PNG) jsou v následující složce. Pro výměnu stačí nahradit soubor se stejným jménem:
 
 ```
 src/main/resources/assets/monsterultra/textures/item/
