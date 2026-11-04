@@ -28,10 +28,19 @@ public final class ModItems {
 
 	public static final Item EMPTY_CAN = register("empty_can", Item::new, new Item.Properties());
 
+	public static final Item EMPTY_VIAL = register("empty_vial", Item::new, new Item.Properties());
+	public static final Item SUCRALOSE = register("sucralose", Item::new, new Item.Properties());
+	public static final Item SUCRALOSE_SOLUTION = register("sucralose_solution", Item::new, new Item.Properties());
+
+	public static final Map<MonsterEssence, Item> ESSENCES = new EnumMap<>(MonsterEssence.class);
 	public static final Map<MonsterFlavor, Item> CANS = new EnumMap<>(MonsterFlavor.class);
 	public static final Map<MonsterFlavor, Item> BUCKETS = new EnumMap<>(MonsterFlavor.class);
 
 	static {
+		for (MonsterEssence essence : MonsterEssence.values()) {
+			ESSENCES.put(essence, register(essence.itemId(), Item::new, new Item.Properties()));
+		}
+
 		for (MonsterFlavor flavor : MonsterFlavor.values()) {
 			Consumable consumable = Consumables.defaultDrink()
 				.onConsume(new ApplyStatusEffectsConsumeEffect(flavor.effects()))

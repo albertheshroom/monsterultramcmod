@@ -1,0 +1,20 @@
+{
+  "type": "monsterultra:crafting_shapeless_bottle_remainder",
+  "category": "misc",
+  "ingredients": [
+    {
+      "fabric:type": "fabric:components",
+      "base": "minecraft:potion",
+      "components": {
+        "minecraft:potion_contents": {
+          "potion": "minecraft:water"
+        }
+      }
+    },
+    "monsterultra:sucralose",
+    "monsterultra:empty_vial"
+  ],
+  "result": {
+    "id": "monsterultra:sucralose_solution"
+  }
+}

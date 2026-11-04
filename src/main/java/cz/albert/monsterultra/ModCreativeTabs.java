@@ -22,6 +22,12 @@ public final class ModCreativeTabs {
 					output.accept(ModItems.BUCKETS.get(flavor));
 				}
 				output.accept(ModItems.EMPTY_CAN);
+				for (MonsterEssence essence : MonsterEssence.values()) {
+					output.accept(ModItems.ESSENCES.get(essence));
+				}
+				output.accept(ModItems.SUCRALOSE);
+				output.accept(ModItems.EMPTY_VIAL);
+				output.accept(ModItems.SUCRALOSE_SOLUTION);
 			})
 			.build()
 	);
