@@ -89,6 +89,18 @@ Vždy: essence + 2× sucralose + 2× cocoa beans + doplňkový item.
 | Ultra Strawberry Dreams | Dreamberry | Pink dye |
 | Ultra Rosá | Rosá | Rose bush |
 | Ultra Paradise | Kiwi | Lime dye |
+| Ultra Violet | Grape | Purple dye |
+| Ultra Peachy Keen | Peach | Honeycomb |
+| Ultra Watermelon | Watermelon | Melon slice |
+| Ultra Red | Redberry | Red dye |
+| Ultra Blue | Blue Raspberry | Light blue dye |
+| Ultra Fantasy Ruby Red | Grapefruit | Magenta dye |
+| Lando Norris | Yuzu | Clay ball |
+| Ultra Vice Guava | Guava | Nether wart |
+| Ultra Fiesta Mango | Mango | Orange dye |
+| VR46 Zero Sugar | Coldrex | Yellow dye |
+| Ultra Gold Pineapple | Pineapple | Gold nugget |
+| Ultra Black | Cherry | Beetroot |
 
 Recepty: `src/main/resources/data/monsterultra/recipe/cooking/`.
 

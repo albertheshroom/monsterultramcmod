@@ -1,0 +1,19 @@
+{
+  "type": "farmersdelight:cooking",
+  "container": {
+    "id": "minecraft:water_bucket"
+  },
+  "experience": 1.0,
+  "ingredients": [
+    "monsterultra:mango_essence",
+    "monsterultra:sucralose",
+    "monsterultra:sucralose",
+    "minecraft:cocoa_beans",
+    "minecraft:cocoa_beans",
+    "minecraft:orange_dye"
+  ],
+  "recipe_book_tab": "drinks",
+  "result": {
+    "id": "monsterultra:ultra_fiesta_mango_bucket"
+  }
+}

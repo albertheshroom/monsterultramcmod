@@ -1,0 +1,19 @@
+{
+  "type": "farmersdelight:cooking",
+  "container": {
+    "id": "minecraft:water_bucket"
+  },
+  "experience": 1.0,
+  "ingredients": [
+    "monsterultra:blue_raspberry_essence",
+    "monsterultra:sucralose",
+    "monsterultra:sucralose",
+    "minecraft:cocoa_beans",
+    "minecraft:cocoa_beans",
+    "minecraft:light_blue_dye"
+  ],
+  "recipe_book_tab": "drinks",
+  "result": {
+    "id": "monsterultra:ultra_blue_bucket"
+  }
+}

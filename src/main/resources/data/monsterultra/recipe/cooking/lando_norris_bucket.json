@@ -1,0 +1,19 @@
+{
+  "type": "farmersdelight:cooking",
+  "container": {
+    "id": "minecraft:water_bucket"
+  },
+  "experience": 1.0,
+  "ingredients": [
+    "monsterultra:yuzu_essence",
+    "monsterultra:sucralose",
+    "monsterultra:sucralose",
+    "minecraft:cocoa_beans",
+    "minecraft:cocoa_beans",
+    "minecraft:clay_ball"
+  ],
+  "recipe_book_tab": "drinks",
+  "result": {
+    "id": "monsterultra:lando_norris_bucket"
+  }
+}
