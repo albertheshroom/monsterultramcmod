@@ -41,7 +41,7 @@ Navíc `empty_can` (prázdná plechovka).
 
 ### Chemistry Table (Chemický stůl)
 
-Blok (zatím jen v creative, placeholder textura). GUI jako brewing stand: nahoře surovina, dole 2 sloty na **empty vial**, vlevo palivo.
+Blok s placeholder texturou. GUI jako brewing stand: nahoře surovina, dole 2 sloty na **empty vial**, vlevo palivo.
 
 - **Palivo:** houby – red/brown mushroom, crimson/warped fungus = 1 vaření; red/brown mushroom block, mushroom stem = 4 vaření
   (item tagy `monsterultra:chemistry_fuel_small` / `chemistry_fuel_large`).
@@ -61,6 +61,22 @@ Blok (zatím jen v creative, placeholder textura). GUI jako brewing stand: naho�
 | Chorus fruit | Grape / Kiwi |
 
 Vaření trvá 20 s. Hopper shora vkládá surovinu, z boku vialy a palivo, zespodu odebírá hotové výrobky.
+
+### Recepty (crafting table)
+
+**Empty Vial ×16**
+```
+.  Leather  .
+Glass pane  .  Glass pane
+.  Glass pane  .
+```
+
+**Chemistry Table**
+```
+Iron ingot   Redstone        Iron ingot
+Empty vial   Brewing stand   Empty vial
+Iron ingot   Cauldron        Iron ingot
+```
 
 ### Brewing stand
 
