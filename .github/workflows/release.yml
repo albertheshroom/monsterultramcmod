@@ -129,3 +129,4 @@ jobs:
           java: 25
           dependencies: |
             fabric-api(required)
+            farmers-delight-refabricated(required)

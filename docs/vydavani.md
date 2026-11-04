@@ -33,7 +33,7 @@ Text stránky je připravený v [project-page.md](project-page.md) (anglicky). I
 | Loader, verze | Fabric, 26.3 | Fabric, 26.3 |
 | Strana | — | Client and server (required on both) |
 | Licence | All Rights Reserved | All Rights Reserved (ARR) |
-| Závislost | Fabric API (required) | Fabric API (required) |
+| Závislosti | Fabric API, Farmer's Delight Refabricated (required) | Fabric API, Farmer's Delight Refabricated (required) |
 
 - CurseForge: <https://authors.curseforge.com/#/projects/create>. Projekt projde ručním schválením,
   obvykle do pár dní. Soubory lze nahrávat až po schválení.
@@ -64,6 +64,6 @@ Výsledek je v souhrnu běhu: ✅, ❌ s důvodem, nebo „přeskočeno“ pro n
 
 ### 5. První nahrání
 *Actions → Release → Run workflow*, tag `v0.0.1-alpha`. Workflow existující release jen obnoví a jar
-nahraje na obě platformy jako *alpha* se závislostí na Fabric API.
+nahraje na obě platformy jako *alpha* se závislostí na Fabric API a Farmer's Delight Refabricated.
 
 Každé další vydání se pak nahraje samo.

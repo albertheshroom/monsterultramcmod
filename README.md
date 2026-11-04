@@ -35,7 +35,7 @@ Navíc `empty_can` (prázdná plechovka).
 - Recept (bez tvaru, jde i v craftingu v inventáři): **lahev s vodou + sucralose + empty vial → sucralose solution**, vrátí prázdnou glass bottle.
   Typ receptu `monsterultra:crafting_shapeless_bottle_remainder` = shapeless recept, který za každý lektvar vrátí prázdnou lahev. Vše je ve vlastním creative tabu **Monster Ultra**.
 
-- Všechny plechovky i kbelíky se jmenují **Monster Energy**; příchuť je vidět na textuře a v tooltipu (např. „VR46 Zero Sugar“).
+- Plechovky se jmenují **Monster Energy**, kbelíky **Monster Energy Bucket** (česky „Kbelík Monster Energy“); příchuť je vidět na textuře a v tooltipu (např. „VR46 Zero Sugar“).
 - **Plechovka**: vypije se (jako lektvar), dá 2 jídla + Speed I a Haste I na 30 s, zůstane prázdná plechovka. Stackuje se po 16.
 - **Kbelík**: zatím jen item (nejde vylít). Recept na kbelík bude doplněn později.
 
@@ -115,7 +115,7 @@ Potřeba **Java 25**.
 ./gradlew build
 ```
 
-Hotový mod je v `build/libs/monsterultra-0.0.3-alpha.jar` (do složky `mods` spolu s Fabric API).
+Hotový mod je v `build/libs/monsterultra-0.0.3-alpha.jar` (do složky `mods` spolu s Fabric API a Farmer's Delight Refabricated).
 
 Spuštění klienta pro testování:
 

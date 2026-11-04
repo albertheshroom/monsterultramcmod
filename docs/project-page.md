@@ -18,5 +18,6 @@ This is an early alpha. Recipes for filling buckets with Monster are coming in a
 - Minecraft 26.3
 - Fabric Loader 0.20.1+
 - Fabric API
+- Farmer's Delight Refabricated
 
 *This is a fan-made mod and is not affiliated with or endorsed by Monster Energy.*
