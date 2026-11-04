@@ -45,6 +45,11 @@ public enum MonsterFlavor {
 		return displayName;
 	}
 
+	/** Translation key of the flavor name shown in the tooltip. */
+	public String translationKey() {
+		return "flavor.monsterultra." + id;
+	}
+
 	public String canId() {
 		return id + "_can";
 	}

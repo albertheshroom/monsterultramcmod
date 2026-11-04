@@ -1,18 +1,22 @@
 package cz.albert.monsterultra;
 
 import java.util.EnumMap;
+import java.util.List;
 import java.util.Map;
 import java.util.function.Function;
 import net.minecraft.core.Registry;
 import net.minecraft.core.component.DataComponents;
 import net.minecraft.core.registries.BuiltInRegistries;
 import net.minecraft.core.registries.Registries;
+import net.minecraft.ChatFormatting;
+import net.minecraft.network.chat.Component;
 import net.minecraft.resources.ResourceKey;
 import net.minecraft.world.food.FoodProperties;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.Items;
 import net.minecraft.world.item.component.Consumable;
 import net.minecraft.world.item.component.Consumables;
+import net.minecraft.world.item.component.ItemLore;
 import net.minecraft.world.item.consume_effects.ApplyStatusEffectsConsumeEffect;
 
 public final class ModItems {
@@ -32,17 +36,26 @@ public final class ModItems {
 			Consumable consumable = Consumables.defaultDrink()
 				.onConsume(new ApplyStatusEffectsConsumeEffect(flavor.effects()))
 				.build();
+			ItemLore flavorTooltip = flavorTooltip(flavor);
 			CANS.put(flavor, register(flavor.canId(), Item::new, new Item.Properties()
+				.component(DataComponents.LORE, flavorTooltip)
 				.food(MONSTER_FOOD, consumable)
 				.usingConvertsTo(EMPTY_CAN)
 				.stacksTo(16)));
 			BUCKETS.put(flavor, register(flavor.bucketId(), Item::new, new Item.Properties()
+				.component(DataComponents.LORE, flavorTooltip)
 				.craftRemainder(Items.BUCKET)
 				.stacksTo(1)));
 		}
 	}
 
 	private ModItems() {
+	}
+
+	/** Gray, non-italic tooltip line with the flavor name, e.g. "VR46 Zero Sugar". */
+	private static ItemLore flavorTooltip(MonsterFlavor flavor) {
+		return new ItemLore(List.of(Component.translatable(flavor.translationKey())
+			.withStyle(style -> style.withColor(ChatFormatting.GRAY).withItalic(false))));
 	}
 
 	private static Item register(String name, Function<Item.Properties, Item> factory, Item.Properties properties) {

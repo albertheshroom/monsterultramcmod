@@ -29,6 +29,7 @@ Verze: **0.0.1-alpha**
 
 Navíc `empty_can` (prázdná plechovka). Vše je ve vlastním creative tabu **Monster Ultra**.
 
+- Všechny plechovky i kbelíky se jmenují **Monster Energy**; příchuť je vidět na textuře a v tooltipu (např. „VR46 Zero Sugar“).
 - **Plechovka**: vypije se (jako lektvar), dá 2 jídla + Speed I a Haste I na 30 s, zůstane prázdná plechovka. Stackuje se po 16.
 - **Kbelík**: zatím jen item (nejde vylít). Recept na kbelík bude doplněn později.
 
