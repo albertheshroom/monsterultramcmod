@@ -39,6 +39,29 @@ Navíc `empty_can` (prázdná plechovka).
 - **Plechovka**: vypije se (jako lektvar), dá 2 jídla + Speed I a Haste I na 30 s, zůstane prázdná plechovka. Stackuje se po 16.
 - **Kbelík**: zatím jen item (nejde vylít). Recept na kbelík bude doplněn později.
 
+### Chemistry Table (Chemický stůl)
+
+Blok (zatím jen v creative, placeholder textura). GUI jako brewing stand: nahoře surovina, dole 2 sloty na **empty vial**, vlevo palivo.
+
+- **Palivo:** houby – red/brown mushroom, crimson/warped fungus = 1 vaření; red/brown mushroom block, mushroom stem = 4 vaření
+  (item tagy `monsterultra:chemistry_fuel_small` / `chemistry_fuel_large`).
+- **Voda:** vaří jen když se některé z 6 stěn dotýká voda (zdrojová i tekoucí, waterlogged blok, kotel s vodou). Jinak GUI ukáže „Chybí voda“.
+- **Cukr:** 2 empty vialy → 2× sucralose solution; bez vialů → 1 sukralóza do 1. spodního slotu.
+- **Ovoce → 2 vialy essence** (musí být 2 empty vialy). Essence se vybírá tlačítky v GUI:
+
+| Ovoce | Essence |
+|---|---|
+| Golden apple | Pineapple / Rosá |
+| Glow berries | Citrus / Dreamberry |
+| Glistering melon slice | Coldrex / Yuzu |
+| Melon slice | Watermelon / Mango |
+| Apple | Grapefruit / Peach |
+| Beetroot | Guava / Cherry |
+| Sweet berries | Blue Raspberry / Redberry |
+| Chorus fruit | Grape / Kiwi |
+
+Vaření trvá 20 s. Hopper shora vkládá surovinu, z boku vialy a palivo, zespodu odebírá hotové výrobky.
+
 ### Brewing stand
 
 Kbelík Monsteru nahoru, do 3 spodních slotů **iron nugget** → po 20 s jsou z nuggetů plechovky dané příchutě a nahoře zůstane prázdný kbelík.

@@ -67,5 +67,8 @@
   "item.monsterultra.yuzu_essence": "Yuzu Essence",
   "item.monsterultra.empty_vial": "Empty Vial",
   "item.monsterultra.sucralose": "Sucralose",
-  "item.monsterultra.sucralose_solution": "Sucralose Solution"
+  "item.monsterultra.sucralose_solution": "Sucralose Solution",
+  "block.monsterultra.chemistry_table": "Chemistry Table",
+  "container.monsterultra.chemistry_table": "Chemistry Table",
+  "container.monsterultra.chemistry_table.needs_water": "Needs water"
 }

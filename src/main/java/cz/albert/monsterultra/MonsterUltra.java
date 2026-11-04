@@ -16,6 +16,7 @@ public class MonsterUltra implements ModInitializer {
 	@Override
 	public void onInitialize() {
 		ModItems.register();
+		ModBlocks.register();
 		ModRecipes.register();
 		ModCreativeTabs.register();
 		LOGGER.info("Monster Ultra loaded with {} flavors", MonsterFlavor.values().length);

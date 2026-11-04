@@ -28,6 +28,7 @@ public final class ModCreativeTabs {
 				output.accept(ModItems.SUCRALOSE);
 				output.accept(ModItems.EMPTY_VIAL);
 				output.accept(ModItems.SUCRALOSE_SOLUTION);
+				output.accept(ModBlocks.CHEMISTRY_TABLE_ITEM);
 			})
 			.build()
 	);

@@ -16,6 +16,9 @@
 	"entrypoints": {
 		"main": [
 			"cz.albert.monsterultra.MonsterUltra"
+		],
+		"client": [
+			"cz.albert.monsterultra.client.MonsterUltraClient"
 		]
 	},
 	"mixins": [

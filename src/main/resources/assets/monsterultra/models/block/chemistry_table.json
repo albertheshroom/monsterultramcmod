@@ -1,0 +1,9 @@
+{
+  "parent": "minecraft:block/orientable_with_bottom",
+  "textures": {
+    "top": "monsterultra:block/chemistry_table_top",
+    "side": "monsterultra:block/chemistry_table_side",
+    "front": "monsterultra:block/chemistry_table_front",
+    "bottom": "monsterultra:block/chemistry_table_bottom"
+  }
+}
