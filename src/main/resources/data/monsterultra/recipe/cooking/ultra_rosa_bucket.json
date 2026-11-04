@@ -1,0 +1,19 @@
+{
+  "type": "farmersdelight:cooking",
+  "container": {
+    "id": "minecraft:water_bucket"
+  },
+  "experience": 1.0,
+  "ingredients": [
+    "monsterultra:rosa_essence",
+    "monsterultra:sucralose",
+    "monsterultra:sucralose",
+    "minecraft:cocoa_beans",
+    "minecraft:cocoa_beans",
+    "minecraft:rose_bush"
+  ],
+  "recipe_book_tab": "drinks",
+  "result": {
+    "id": "monsterultra:ultra_rosa_bucket"
+  }
+}

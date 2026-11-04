@@ -37,7 +37,7 @@ Navíc `empty_can` (prázdná plechovka).
 
 - Plechovky se jmenují **Monster Energy**, kbelíky **Monster Energy Bucket** (česky „Kbelík Monster Energy“); příchuť je vidět na textuře a v tooltipu (např. „VR46 Zero Sugar“).
 - **Plechovka**: vypije se (jako lektvar), dá 2 jídla + Speed I a Haste I na 30 s, zůstane prázdná plechovka. Stackuje se po 16.
-- **Kbelík**: zatím jen item (nejde vylít). Recept na kbelík bude doplněn později.
+- **Kbelík**: zatím jen item (nejde vylít). Vaří se v Cooking Pot z Farmer's Delight (viz níže).
 
 ### Chemistry Table (Chemický stůl)
 
@@ -77,6 +77,20 @@ Iron ingot   Redstone        Iron ingot
 Empty vial   Brewing stand   Empty vial
 Iron ingot   Cauldron        Iron ingot
 ```
+
+### Monster Energy Bucket (Cooking Pot z Farmer's Delight)
+
+Vaří se v **Cooking Pot** z Farmer's Delight (nad zdrojem tepla). Nádoba: **kbelík s vodou**.
+Vždy: essence + 2× sucralose + 2× cocoa beans + doplňkový item.
+
+| Bucket | Essence | Doplněk |
+|---|---|---|
+| Ultra White | Citrus | White dye |
+| Ultra Strawberry Dreams | Dreamberry | Pink dye |
+| Ultra Rosá | Rosá | Rose bush |
+| Ultra Paradise | Kiwi | Lime dye |
+
+Recepty: `src/main/resources/data/monsterultra/recipe/cooking/`.
 
 ### Brewing stand
 
