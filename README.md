@@ -100,7 +100,7 @@ Vždy: essence + 2× sucralose + 2× cocoa beans + doplňkový item.
 | Ultra Fiesta Mango | Mango | Orange dye |
 | VR46 Zero Sugar | Coldrex | Yellow dye |
 | Ultra Gold Pineapple | Pineapple | Gold nugget |
-| Ultra Black | Cherry | Beetroot |
+| Ultra Black | Cherry | Spider eye |
 
 Recepty: `src/main/resources/data/monsterultra/recipe/cooking/`.
 
