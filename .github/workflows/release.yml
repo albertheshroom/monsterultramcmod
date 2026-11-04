@@ -68,6 +68,7 @@ jobs:
           echo "version=$version" >> "$GITHUB_OUTPUT"
           echo "title=Monster Ultra $version" >> "$GITHUB_OUTPUT"
           case "$version" in
+            *beta*|*rc*) echo "prerelease=true" >> "$GITHUB_OUTPUT"; echo "type=beta" >> "$GITHUB_OUTPUT" ;;
             0.*|*-*) echo "prerelease=true" >> "$GITHUB_OUTPUT"; echo "type=alpha" >> "$GITHUB_OUTPUT" ;;
             *) echo "prerelease=false" >> "$GITHUB_OUTPUT"; echo "type=release" >> "$GITHUB_OUTPUT" ;;
           esac

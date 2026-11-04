@@ -3,7 +3,7 @@
 ## Verze
 - Jediný zdroj verze pro build je `version` v `gradle.properties`; při vydání ji workflow přepíše verzí z tagu
   (`v0.0.2-alpha` → `0.0.2-alpha`).
-- Verze 0.x a verze s pomlčkou (např. `1.1.0-beta`) se vydávají jako pre-release / *alpha*, ostatní jako plné vydání.
+- Verze s `beta` nebo `rc` (např. `0.1.0-beta`) se vydávají jako pre-release / *beta*, ostatní verze 0.x a verze s pomlčkou jako pre-release / *alpha*, zbytek jako plné vydání.
 - Poznámky k vydání jsou v `.github/release-notes/<tag>.md` (např. `v0.0.2-alpha.md`).
 
 ## Jak vydat verzi
