@@ -2,7 +2,7 @@
   "type": "minecraft:crafting_shaped",
   "category": "misc",
   "key": {
-    "L": "minecraft:leather",
+    "L": "minecraft:rabbit_hide",
     "G": "minecraft:glass_pane"
   },
   "pattern": [

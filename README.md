@@ -66,7 +66,7 @@ Vaření trvá 20 s. Hopper shora vkládá surovinu, z boku vialy a palivo, zesp
 
 **Empty Vial ×16**
 ```
-.  Leather  .
+.  Rabbit hide  .
 Glass pane  .  Glass pane
 .  Glass pane  .
 ```
