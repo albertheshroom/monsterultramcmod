@@ -70,5 +70,6 @@
   "item.monsterultra.sucralose_solution": "Roztok sukralózy",
   "block.monsterultra.chemistry_table": "Chemický stůl",
   "container.monsterultra.chemistry_table": "Chemický stůl",
-  "container.monsterultra.chemistry_table.needs_water": "Chybí voda"
+  "container.monsterultra.chemistry_table.needs_water": "Chybí voda",
+  "effect.monsterultra.caffeinated": "Nakofeinovaný"
 }

@@ -36,7 +36,26 @@ Navíc `empty_can` (prázdná plechovka).
   Typ receptu `monsterultra:crafting_shapeless_bottle_remainder` = shapeless recept, který za každý lektvar vrátí prázdnou lahev. Vše je ve vlastním creative tabu **Monster Ultra**.
 
 - Plechovky se jmenují **Monster Energy**, kbelíky **Monster Energy Bucket** (česky „Kbelík Monster Energy“); příchuť je vidět na textuře a v tooltipu (např. „VR46 Zero Sugar“).
-- **Plechovka**: vypije se (jako lektvar), dá 2 jídla + Speed I a Haste I na 30 s, zůstane prázdná plechovka. Stackuje se po 16.
+- **Plechovka**: vypije se (jako lektvar), dá 2 jídla, zůstane prázdná plechovka. Efekty viz níže. Stackuje se po 16.
+
+### Efekty (60 s)
+Každý Monster dává **Caffeinated** (česky *Nakofeinovaný*): +20 % rychlost pohybu, +20 % rychlost těžení, +20 % rychlost útoku (kratší cooldown). Navíc vlastní efekt podle příchutě:
+
+| Příchuť | Efekt |
+|---|---|
+| Ultra White | Strength I |
+| Ultra Strawberry Dreams | Regeneration I |
+| Ultra Rosá | Health Boost I |
+| Ultra Paradise | Night Vision |
+| Ultra Fantasy Ruby Red | Fire Resistance |
+| Ultra Gold Pineapple | Absorption I |
+| Ultra Black | Resistance I |
+| Lando Norris | Speed II + Nausea (10 s) |
+| VR46 Zero Sugar | Speed II + odstraní negativní efekty |
+| Ultra Blue | Dolphin's Grace |
+| ostatní | jen Caffeinated |
+
+Efekty se nastavují v `src/main/java/cz/albert/monsterultra/MonsterFlavor.java`.
 - **Kbelík**: zatím jen item (nejde vylít). Vaří se v Cooking Pot z Farmer's Delight (viz níže).
 
 ### Chemistry Table (Chemický stůl)
@@ -124,10 +143,6 @@ src/main/resources/assets/monsterultra/textures/item/
 ```
 
 Ikona modu: `src/main/resources/assets/monsterultra/icon.png`.
-
-## Úprava efektů
-
-Efekty plechovek se nastavují v `src/main/java/cz/albert/monsterultra/MonsterFlavor.java` (metoda `effects()`).
 
 ## Vydávání
 

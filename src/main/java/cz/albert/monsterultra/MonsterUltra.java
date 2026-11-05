@@ -15,6 +15,7 @@ public class MonsterUltra implements ModInitializer {
 
 	@Override
 	public void onInitialize() {
+		ModEffects.register();
 		ModItems.register();
 		ModBlocks.register();
 		ModRecipes.register();

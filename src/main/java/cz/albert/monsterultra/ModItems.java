@@ -18,6 +18,7 @@ import net.minecraft.world.item.component.Consumable;
 import net.minecraft.world.item.component.Consumables;
 import net.minecraft.world.item.component.ItemLore;
 import net.minecraft.world.item.consume_effects.ApplyStatusEffectsConsumeEffect;
+import cz.albert.monsterultra.effect.ClearHarmfulEffectsConsumeEffect;
 
 public final class ModItems {
 	private static final FoodProperties MONSTER_FOOD = new FoodProperties.Builder()
@@ -42,7 +43,11 @@ public final class ModItems {
 		}
 
 		for (MonsterFlavor flavor : MonsterFlavor.values()) {
-			Consumable consumable = Consumables.defaultDrink()
+			Consumable.Builder drink = Consumables.defaultDrink();
+			if (flavor.clearsHarmfulEffects()) {
+				drink.onConsume(ClearHarmfulEffectsConsumeEffect.INSTANCE);
+			}
+			Consumable consumable = drink
 				.onConsume(new ApplyStatusEffectsConsumeEffect(flavor.effects()))
 				.build();
 			ItemLore flavorTooltip = flavorTooltip(flavor);
