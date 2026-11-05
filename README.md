@@ -2,7 +2,7 @@
 
 Fabric mod pro **Minecraft 26.3**, který přidává energy drinky Monster Ultra.
 
-Verze: **0.2.0-beta**
+Verze: **0.2.1-beta**
 
 ## Obsah
 
@@ -156,7 +156,7 @@ Potřeba **Java 25**.
 ./gradlew build
 ```
 
-Hotový mod je v `build/libs/monsterultra-0.2.0-beta.jar` (do složky `mods` spolu s Fabric API a Farmer's Delight Refabricated).
+Hotový mod je v `build/libs/monsterultra-0.2.1-beta.jar` (do složky `mods` spolu s Fabric API a Farmer's Delight Refabricated).
 
 Spuštění klienta pro testování:
 
