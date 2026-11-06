@@ -31,7 +31,8 @@ public final class ModItems {
 
 	public static final Item EMPTY_VIAL = register("empty_vial", Item::new, new Item.Properties());
 	public static final Item SUCRALOSE = register("sucralose", Item::new, new Item.Properties());
-	public static final Item SUCRALOSE_SOLUTION = register("sucralose_solution", Item::new, new Item.Properties());
+	public static final Item SUCRALOSE_SOLUTION = register("sucralose_solution", Item::new, new Item.Properties()
+		.craftRemainder(EMPTY_VIAL));
 
 	public static final Map<MonsterEssence, Item> ESSENCES = new EnumMap<>(MonsterEssence.class);
 	public static final Map<MonsterFlavor, Item> CANS = new EnumMap<>(MonsterFlavor.class);
@@ -39,7 +40,8 @@ public final class ModItems {
 
 	static {
 		for (MonsterEssence essence : MonsterEssence.values()) {
-			ESSENCES.put(essence, register(essence.itemId(), Item::new, new Item.Properties()));
+			// Essences come in a vial: the Cooking Pot (and crafting) gives the empty vial back.
+			ESSENCES.put(essence, register(essence.itemId(), Item::new, new Item.Properties().craftRemainder(EMPTY_VIAL)));
 		}
 
 		for (MonsterFlavor flavor : MonsterFlavor.values()) {
