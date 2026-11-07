@@ -1,0 +1,36 @@
+modLoader = "javafml"
+loaderVersion = "${loader_version_range}"
+license = "All Rights Reserved"
+issueTrackerURL = "https://github.com/albertheshroom/monsterultramcmod/issues"
+
+[[mods]]
+modId = "${mod_id}"
+version = "${mod_version}"
+displayName = "${mod_name}"
+logoFile = "assets/monsterultra/icon.png"
+authors = "albertheshroom"
+description = '''Adds Monster Ultra energy drinks - cans and buckets of 16 flavors, essences, the Chemistry Table and the Caffeinated effect.'''
+
+[[mixins]]
+config = "${mod_id}.mixins.json"
+
+[[dependencies.${mod_id}]]
+modId = "neoforge"
+type = "required"
+versionRange = "${neo_version_range}"
+ordering = "NONE"
+side = "BOTH"
+
+[[dependencies.${mod_id}]]
+modId = "minecraft"
+type = "required"
+versionRange = "${minecraft_version_range}"
+ordering = "NONE"
+side = "BOTH"
+
+[[dependencies.${mod_id}]]
+modId = "farmersdelight"
+type = "required"
+versionRange = "[1.21.1-1.3.0,)"
+ordering = "AFTER"
+side = "BOTH"
