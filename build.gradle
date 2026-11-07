@@ -17,7 +17,8 @@ repositories {
 }
 
 base {
-	archivesName = 'monsterultra'
+	// monsterultra-fabric-26.3-<version>.jar
+	archivesName = "monsterultra-fabric-${project.minecraft_version}"
 }
 
 loom {

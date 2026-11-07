@@ -1,6 +1,13 @@
-# Monster Ultra (Fabric mod)
+# Monster Ultra
 
-Fabric mod pro **Minecraft 26.3**, který přidává energy drinky Monster Ultra.
+Mod pro Minecraft, který přidává energy drinky Monster Ultra. Dvě verze se stejným obsahem:
+
+| Loader | Minecraft | Java | Složka |
+|---|---|---|---|
+| Fabric | 26.3 | 25 | kořen repozitáře |
+| NeoForge | 1.21.1 | 21 | `neoforge-1.21.1/` |
+
+Obě vyžadují **Farmer's Delight** (Fabric: Farmer's Delight Refabricated, NeoForge: Farmer's Delight).
 
 Verze: **0.2.2-beta**
 
@@ -150,16 +157,22 @@ Vydání na GitHub, CurseForge a Modrinth: viz [docs/vydavani.md](docs/vydavani.
 
 ## Build
 
-Potřeba **Java 25**.
+**Fabric 26.3** (Java 25):
 
 ```bash
 ./gradlew build
 ```
 
-Hotový mod je v `build/libs/monsterultra-0.2.2-beta.jar` (do složky `mods` spolu s Fabric API a Farmer's Delight Refabricated).
+Jar: `build/libs/monsterultra-fabric-26.3-<verze>.jar` (do `mods` spolu s Fabric API a Farmer's Delight Refabricated).
 
-Spuštění klienta pro testování:
+**NeoForge 1.21.1** (Java 21):
 
 ```bash
-./gradlew runClient
+./gradlew -p neoforge-1.21.1 build
 ```
+
+Jar: `neoforge-1.21.1/build/libs/monsterultra-neoforge-1.21.1-<verze>.jar` (do `mods` spolu s Farmer's Delight).
+
+Verze modu je pro obě jen jedna: `version` v kořenovém `gradle.properties`. Textury, modely a překlady jsou sdílené (`src/main/resources/assets`), data (recepty, tagy…) má NeoForge verze vlastní v `neoforge-1.21.1/src/main/resources/data` kvůli jinému formátu 1.21.1.
+
+Spuštění klienta pro testování: `./gradlew runClient`, resp. `./gradlew -p neoforge-1.21.1 runClient`.

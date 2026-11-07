@@ -11,8 +11,8 @@
 2. Vydání jedním ze dvou způsobů:
    - *Actions → Release → Run workflow*, tag `vX.Y.Z` (cíl nech prázdný = výchozí větev): workflow tag vytvoří sám;
    - nebo lokálně `git tag vX.Y.Z && git push origin vX.Y.Z`.
-3. Workflow **Release** sestaví jar, vytvoří GitHub Release s poznámkami a pokud je nastavené publikování,
-   nahraje jar na CurseForge a Modrinth.
+3. Workflow **Release** sestaví jar pro **Fabric 26.3** i **NeoForge 1.21.1**, vytvoří GitHub Release s poznámkami a oběma jary
+   a pokud je nastavené publikování, nahraje každý jar na CurseForge a Modrinth zvlášť (se správným loaderem, verzí MC a závislostmi).
 4. Už existující tag jde vydat znovu stejně ručně (cíl se pak ignoruje).
 
 ## Publikování na CurseForge a Modrinth
@@ -30,10 +30,10 @@ Text stránky je připravený v [project-page.md](project-page.md) (anglicky). I
 | Krátký popis | Monster Ultra energy drinks: 16 flavors in cans and buckets, brewed in the brewing stand. | stejný |
 | Typ | Mod (Minecraft) | Mod |
 | Kategorie | Food | Food |
-| Loader, verze | Fabric, 26.3 | Fabric, 26.3 |
+| Loader, verze | Fabric 26.3, NeoForge 1.21.1 | Fabric 26.3, NeoForge 1.21.1 |
 | Strana | — | Client and server (required on both) |
 | Licence | All Rights Reserved | All Rights Reserved (ARR) |
-| Závislosti | Fabric API, Farmer's Delight Refabricated (required) | Fabric API, Farmer's Delight Refabricated (required) |
+| Závislosti | Fabric: Fabric API, Farmer's Delight Refabricated; NeoForge: Farmer's Delight (required) | stejné |
 
 - CurseForge: <https://authors.curseforge.com/#/projects/create>. Projekt projde ručním schválením,
   obvykle do pár dní. Soubory lze nahrávat až po schválení.

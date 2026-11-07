@@ -1,0 +1,33 @@
+{
+  "type": "farmersdelight:cooking",
+  "container": {
+    "count": 1,
+    "id": "minecraft:water_bucket"
+  },
+  "experience": 1.0,
+  "ingredients": [
+    {
+      "item": "monsterultra:grapefruit_essence"
+    },
+    {
+      "item": "monsterultra:sucralose"
+    },
+    {
+      "item": "monsterultra:sucralose"
+    },
+    {
+      "item": "minecraft:cocoa_beans"
+    },
+    {
+      "item": "minecraft:cocoa_beans"
+    },
+    {
+      "item": "minecraft:magenta_dye"
+    }
+  ],
+  "recipe_book_tab": "drinks",
+  "result": {
+    "count": 1,
+    "id": "monsterultra:ultra_fantasy_ruby_red_bucket"
+  }
+}
