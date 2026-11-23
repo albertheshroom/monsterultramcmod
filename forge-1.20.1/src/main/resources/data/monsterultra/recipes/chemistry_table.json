@@ -1,0 +1,29 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "category": "misc",
+  "key": {
+    "I": {
+      "item": "minecraft:iron_ingot"
+    },
+    "R": {
+      "item": "minecraft:redstone"
+    },
+    "V": {
+      "item": "monsterultra:empty_vial"
+    },
+    "B": {
+      "item": "minecraft:brewing_stand"
+    },
+    "C": {
+      "item": "minecraft:cauldron"
+    }
+  },
+  "pattern": [
+    "IRI",
+    "VBV",
+    "ICI"
+  ],
+  "result": {
+    "item": "monsterultra:chemistry_table"
+  }
+}

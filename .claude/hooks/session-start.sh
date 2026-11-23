@@ -37,6 +37,18 @@ if [ -n "${CLAUDE_ENV_FILE:-}" ]; then
   echo "export JAVA_HOME_21=\"$JDK21_DIR\"" >> "$CLAUDE_ENV_FILE"
 fi
 
+# --- JDK 17 for the Forge 1.20.1 build -------------------------------------------
+JDK17_DIR="$HOME/.jdks/temurin-17"
+if [ -d forge-1.20.1 ] && ! "$JDK17_DIR/bin/java" -version 2>&1 | grep -q '"17'; then
+  rm -rf "$JDK17_DIR"
+  mkdir -p "$JDK17_DIR"
+  curl -fsSL "https://api.adoptium.net/v3/binary/latest/17/ga/linux/x64/jdk/hotspot/normal/eclipse" \
+    | tar xz -C "$JDK17_DIR" --strip-components=1
+fi
+if [ -n "${CLAUDE_ENV_FILE:-}" ]; then
+  echo "export JAVA_HOME_17=\"$JDK17_DIR\"" >> "$CLAUDE_ENV_FILE"
+fi
+
 # --- Gradle wrapper, Fabric Loom, Minecraft and mod dependencies ----------------
 # Re-run only when a file that decides what gets downloaded has changed.
 hashes="$HOME/.gradle/.monsterultra-session-start.sha256"
@@ -55,4 +67,14 @@ if [ -d neoforge-1.21.1 ] && ! sha256sum --check --status "$neo_hashes" 2>/dev/n
   JAVA_HOME="$JDK21_DIR" ./gradlew -p neoforge-1.21.1 --no-daemon compileJava
   sha256sum .claude/hooks/session-start.sh neoforge-1.21.1/build.gradle neoforge-1.21.1/settings.gradle \
     neoforge-1.21.1/gradle.properties gradle/wrapper/gradle-wrapper.properties > "$neo_hashes"
+fi
+
+# --- Forge 1.20.1: ModDevGradle legacy, decompiled Minecraft, Farmer's Delight ---
+forge_hashes="$HOME/.gradle/.monsterultra-forge-session-start.sha256"
+if [ -d forge-1.20.1 ] && ! sha256sum --check --status "$forge_hashes" 2>/dev/null; then
+  rm -f "$forge_hashes"
+  JAVA_HOME="$JDK21_DIR" ./gradlew -p forge-1.20.1 --no-daemon \
+    -Porg.gradle.java.installations.paths="$JDK17_DIR" compileJava
+  sha256sum .claude/hooks/session-start.sh forge-1.20.1/build.gradle forge-1.20.1/settings.gradle \
+    forge-1.20.1/gradle.properties gradle/wrapper/gradle-wrapper.properties > "$forge_hashes"
 fi

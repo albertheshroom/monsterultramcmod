@@ -1,0 +1,32 @@
+{
+  "type": "farmersdelight:cooking",
+  "container": {
+    "item": "minecraft:water_bucket"
+  },
+  "experience": 1.0,
+  "ingredients": [
+    {
+      "item": "monsterultra:guava_essence"
+    },
+    {
+      "item": "monsterultra:sucralose"
+    },
+    {
+      "item": "monsterultra:sucralose"
+    },
+    {
+      "item": "minecraft:cocoa_beans"
+    },
+    {
+      "item": "minecraft:cocoa_beans"
+    },
+    {
+      "item": "minecraft:nether_wart"
+    }
+  ],
+  "recipe_book_tab": "drinks",
+  "result": {
+    "item": "monsterultra:ultra_vice_guava_bucket"
+  },
+  "cookingtime": 200
+}

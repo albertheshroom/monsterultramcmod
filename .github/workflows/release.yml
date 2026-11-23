@@ -54,11 +54,12 @@ jobs:
           ref: ${{ env.TAG }}
           path: src
 
-      # Java 21 for the NeoForge 1.21.1 build, Java 25 (default) for the Fabric 26.3 build.
+      # Java 17 for Forge 1.20.1, Java 21 for NeoForge 1.21.1, Java 25 (default) for Fabric 26.3.
       - uses: actions/setup-java@v4
         with:
           distribution: temurin
           java-version: |
+            17
             21
             25
 
@@ -106,6 +107,20 @@ jobs:
           cp neoforge-1.21.1/build/libs/*.jar ../dist/neoforge/
           rm -f ../dist/neoforge/*-sources.jar
           ls ../dist/neoforge
+          echo "built=true" >> "$GITHUB_OUTPUT"
+
+      - name: Build (Forge 1.20.1)
+        id: forge
+        working-directory: src
+        run: |
+          # Older tags have no 1.20.1 version.
+          if [ ! -d forge-1.20.1 ]; then echo "built=false" >> "$GITHUB_OUTPUT"; exit 0; fi
+          JAVA_HOME="$JAVA_HOME_21_X64" ./gradlew -p forge-1.20.1 build -Pversion="${{ steps.meta.outputs.version }}" \
+            -Porg.gradle.java.installations.fromEnv=JAVA_HOME_17_X64 --no-daemon
+          mkdir -p ../dist/forge
+          cp forge-1.20.1/build/libs/*.jar ../dist/forge/
+          rm -f ../dist/forge/*-sources.jar
+          ls ../dist/forge
           echo "built=true" >> "$GITHUB_OUTPUT"
 
       - name: GitHub release
@@ -167,5 +182,29 @@ jobs:
           loaders: neoforge
           game-versions: 1.21.1
           java: 21
+          dependencies: |
+            farmers-delight(required)
+
+      - name: Publish Forge/NeoForge 1.20.1 to CurseForge and Modrinth
+        if: steps.meta.outputs.publish == 'true' && steps.forge.outputs.built == 'true'
+        uses: Kir-Antipov/mc-publish@v3.3
+        with:
+          # A platform without a token gets no project id, so mc-publish skips it.
+          curseforge-id: ${{ secrets.CURSEFORGE_TOKEN != '' && (vars.CURSEFORGE_PROJECT_ID || secrets.CURSEFORGE_PROJECT_ID) || '' }}
+          curseforge-token: ${{ secrets.CURSEFORGE_TOKEN }}
+          modrinth-id: ${{ secrets.MODRINTH_TOKEN != '' && (vars.MODRINTH_PROJECT_ID || secrets.MODRINTH_PROJECT_ID) || '' }}
+          modrinth-token: ${{ secrets.MODRINTH_TOKEN }}
+          # A failure on one platform must not stop the other; it shows up as a warning in the run.
+          fail-mode: warn
+          files: dist/forge/*.jar
+          name: ${{ steps.meta.outputs.title }} (Forge/NeoForge 1.20.1)
+          version: ${{ steps.meta.outputs.version }}
+          version-type: ${{ steps.meta.outputs.type }}
+          changelog-file: notes.md
+          loaders: |
+            forge
+            neoforge
+          game-versions: 1.20.1
+          java: 17
           dependencies: |
             farmers-delight(required)

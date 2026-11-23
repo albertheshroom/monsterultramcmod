@@ -1,0 +1,32 @@
+{
+  "type": "farmersdelight:cooking",
+  "container": {
+    "item": "minecraft:water_bucket"
+  },
+  "experience": 1.0,
+  "ingredients": [
+    {
+      "item": "monsterultra:pineapple_essence"
+    },
+    {
+      "item": "monsterultra:sucralose"
+    },
+    {
+      "item": "monsterultra:sucralose"
+    },
+    {
+      "item": "minecraft:cocoa_beans"
+    },
+    {
+      "item": "minecraft:cocoa_beans"
+    },
+    {
+      "item": "minecraft:gold_nugget"
+    }
+  ],
+  "recipe_book_tab": "drinks",
+  "result": {
+    "item": "monsterultra:ultra_gold_pineapple_bucket"
+  },
+  "cookingtime": 200
+}

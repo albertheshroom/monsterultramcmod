@@ -1,0 +1,108 @@
+plugins {
+    id 'java-library'
+    id 'net.neoforged.moddev.legacyforge' version '2.0.148'
+}
+
+// One version for all loaders: read it from the Fabric build's gradle.properties
+// unless it is passed explicitly (-Pversion=... in CI).
+def rootProps = new Properties()
+file('../gradle.properties').withInputStream { rootProps.load(it) }
+version = project.findProperty('version') && project.version != 'unspecified' ? project.version : rootProps.getProperty('version')
+group = mod_group_id
+
+base {
+    // monsterultra-forge-1.20.1-<version>.jar (runs on Forge 47 and NeoForge 47.1)
+    archivesName = "${mod_id}-forge-${minecraft_version}"
+}
+
+java.toolchain.languageVersion = JavaLanguageVersion.of(17)
+
+legacyForge {
+    version = "${minecraft_version}-${forge_version}"
+
+    parchment {
+        mappingsVersion = project.parchment_mappings_version
+        minecraftVersion = project.parchment_minecraft_version
+    }
+
+    runs {
+        client {
+            client()
+        }
+        server {
+            server()
+            programArgument '--nogui'
+        }
+    }
+
+    mods {
+        "${mod_id}" {
+            sourceSet(sourceSets.main)
+        }
+    }
+}
+
+repositories {
+    exclusiveContent {
+        forRepository {
+            maven {
+                name = 'Modrinth'
+                url = 'https://api.modrinth.com/maven'
+            }
+        }
+        filter {
+            includeGroup('maven.modrinth')
+        }
+    }
+}
+
+dependencies {
+    // Farmer's Delight: Monster Energy buckets are cooked in its Cooking Pot.
+    modImplementation "maven.modrinth:farmers-delight:${farmers_delight_version}"
+    annotationProcessor 'org.spongepowered:mixin:0.8.5:processor'
+}
+
+mixin {
+    add sourceSets.main, "${mod_id}.refmap.json"
+    config "${mod_id}.mixins.json"
+}
+
+jar {
+    manifest.attributes(['MixinConfigs': "${mod_id}.mixins.json"])
+}
+
+def generateModMetadata = tasks.register('generateModMetadata', ProcessResources) {
+    def replaceProperties = [
+            minecraft_version      : minecraft_version,
+            minecraft_version_range: minecraft_version_range,
+            forge_version          : forge_version,
+            forge_version_range    : forge_version_range,
+            loader_version_range   : loader_version_range,
+            mod_id                 : mod_id,
+            mod_name               : mod_name,
+            mod_version            : project.version,
+    ]
+    inputs.properties replaceProperties
+    expand replaceProperties
+    from 'src/main/templates'
+    into 'build/generated/sources/modMetadata'
+}
+sourceSets.main.resources.srcDir generateModMetadata
+legacyForge.ideSyncTask generateModMetadata
+
+// Textures, models, blockstates and translations are shared with the other versions.
+processResources {
+    duplicatesStrategy = DuplicatesStrategy.EXCLUDE
+    // Files in this project (e.g. the 1.20.1 GUI texture) win over the shared ones.
+    from('../src/main/resources/assets') {
+        into 'assets'
+        exclude 'monsterultra/items/**'
+    }
+    from('../neoforge-1.21.1/src/main/resources/assets') {
+        into 'assets'
+    }
+}
+
+tasks.withType(JavaCompile).configureEach {
+    options.encoding = 'UTF-8'
+}

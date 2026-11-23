@@ -1,0 +1,21 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "category": "misc",
+  "key": {
+    "L": {
+      "item": "minecraft:leather"
+    },
+    "G": {
+      "item": "minecraft:glass_pane"
+    }
+  },
+  "pattern": [
+    " L ",
+    "G G",
+    " G "
+  ],
+  "result": {
+    "item": "monsterultra:empty_vial",
+    "count": 16
+  }
+}

@@ -6,8 +6,9 @@ Mod pro Minecraft, který přidává energy drinky Monster Ultra. Dvě verze se 
 |---|---|---|---|
 | Fabric | 26.3 | 25 | kořen repozitáře |
 | NeoForge | 1.21.1 | 21 | `neoforge-1.21.1/` |
+| Forge / NeoForge | 1.20.1 | 17 | `forge-1.20.1/` |
 
-Obě vyžadují **Farmer's Delight** (Fabric: Farmer's Delight Refabricated, NeoForge: Farmer's Delight).
+Všechny vyžadují **Farmer's Delight** (Fabric: Farmer's Delight Refabricated, NeoForge/Forge: Farmer's Delight). Jar pro 1.20.1 běží na Forge 47 i NeoForge 47.1.
 
 Verze: **0.3.0-beta**
 
@@ -173,6 +174,14 @@ Jar: `build/libs/monsterultra-fabric-26.3-<verze>.jar` (do `mods` spolu s Fabric
 
 Jar: `neoforge-1.21.1/build/libs/monsterultra-neoforge-1.21.1-<verze>.jar` (do `mods` spolu s Farmer's Delight).
 
-Verze modu je pro obě jen jedna: `version` v kořenovém `gradle.properties`. Textury, modely a překlady jsou sdílené (`src/main/resources/assets`), data (recepty, tagy…) má NeoForge verze vlastní v `neoforge-1.21.1/src/main/resources/data` kvůli jinému formátu 1.21.1.
+**Forge / NeoForge 1.20.1** (Java 17):
 
-Spuštění klienta pro testování: `./gradlew runClient`, resp. `./gradlew -p neoforge-1.21.1 runClient`.
+```bash
+./gradlew -p forge-1.20.1 build
+```
+
+Jar: `forge-1.20.1/build/libs/monsterultra-forge-1.20.1-<verze>.jar` (do `mods` spolu s Farmer's Delight 1.20.1).
+
+Verze modu je pro všechny jen jedna: `version` v kořenovém `gradle.properties`. Textury, modely a překlady jsou sdílené (`src/main/resources/assets`), data (recepty, tagy…) mají NeoForge a Forge verze vlastní (`neoforge-1.21.1/src/main/resources/data`, `forge-1.20.1/src/main/resources/data`) kvůli jinému formátu. Verze 1.20.1 má vlastní GUI texturu Chemistry Table (1.20.1 nemá GUI sprity).
+
+Spuštění klienta pro testování: `./gradlew runClient`, resp. `./gradlew -p neoforge-1.21.1 runClient` / `./gradlew -p forge-1.20.1 runClient`.
