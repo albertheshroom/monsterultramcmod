@@ -13,7 +13,8 @@
    - nebo lokálně `git tag vX.Y.Z && git push origin vX.Y.Z`.
 3. Workflow **Release** sestaví jar pro **Fabric 26.3**, **NeoForge 1.21.1** a **Forge/NeoForge 1.20.1**, vytvoří GitHub Release s poznámkami a oběma jary
    a pokud je nastavené publikování, nahraje každý jar na CurseForge a Modrinth zvlášť (se správným loaderem, verzí MC a závislostmi).
-4. Už existující tag jde vydat znovu stejně ručně (cíl se pak ignoruje).
+4. Už existující tag jde vydat znovu stejně ručně (cíl se pak ignoruje). Když se vydání nepovede kvůli chybě v kódu, oprav ji a spusť
+   *Run workflow* se zaškrtnutou volbou **Smazat existující release a tag…**: release i tag se vytvoří znovu na opraveném commitu.
 
 ## Publikování na CurseForge a Modrinth
 Každé vydání se samo nahraje na CurseForge a Modrinth, jakmile jsou nastavené tokeny a ID projektů.

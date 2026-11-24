@@ -34,20 +34,10 @@ public class ChemistryTableMenu extends AbstractContainerMenu {
 		checkContainerDataCount(data, DATA_COUNT);
 		this.table = table;
 		this.data = data;
-		this.addSlot(new Slot(table, SLOT_INGREDIENT, 79, 17) {
-			@Override
-			public boolean mayPlace(ItemStack stack) {
-				return ChemistryRecipes.isIngredient(stack);
-			}
-		});
+		this.addSlot(new IngredientSlot(table, SLOT_INGREDIENT, 79, 17));
 		this.addSlot(new VialSlot(table, SLOT_VIAL_A, 56, 51));
 		this.addSlot(new VialSlot(table, SLOT_VIAL_B, 102, 51));
-		this.addSlot(new Slot(table, SLOT_FUEL, 17, 17) {
-			@Override
-			public boolean mayPlace(ItemStack stack) {
-				return ChemistryRecipes.fuelValue(stack) > 0;
-			}
-		});
+		this.addSlot(new FuelSlot(table, SLOT_FUEL, 17, 17));
 		this.addDataSlots(data);
 		for (int row = 0; row < 3; row++) {
 			for (int column = 0; column < 9; column++) {
@@ -136,6 +126,30 @@ public class ChemistryTableMenu extends AbstractContainerMenu {
 		}
 		slot.onTake(player, stack);
 		return original;
+	}
+
+	/** Top slot: sugar or fruit. (Named classes: anonymous Slot subclasses fail to compile against the non-recompiled 1.20.1 jar.) */
+	private static class IngredientSlot extends Slot {
+		IngredientSlot(Container container, int slot, int x, int y) {
+			super(container, slot, x, y);
+		}
+
+		@Override
+		public boolean mayPlace(ItemStack stack) {
+			return ChemistryRecipes.isIngredient(stack);
+		}
+	}
+
+	/** Fuel slot: mushrooms and mushroom blocks. */
+	private static class FuelSlot extends Slot {
+		FuelSlot(Container container, int slot, int x, int y) {
+			super(container, slot, x, y);
+		}
+
+		@Override
+		public boolean mayPlace(ItemStack stack) {
+			return ChemistryRecipes.fuelValue(stack) > 0;
+		}
 	}
 
 	/** Bottom slots: take one empty vial each; products (sucralose, solution, essences) end up here. */
