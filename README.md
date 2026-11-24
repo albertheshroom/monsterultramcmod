@@ -10,7 +10,7 @@ Mod pro Minecraft, který přidává energy drinky Monster Ultra. Dvě verze se 
 
 Všechny vyžadují **Farmer's Delight** (Fabric: Farmer's Delight Refabricated, NeoForge/Forge: Farmer's Delight). Jar pro 1.20.1 běží na Forge 47 i NeoForge 47.1.
 
-Verze: **0.3.0-beta**
+Verze: **0.4.0-beta**
 
 ## Obsah
 
